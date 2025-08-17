@@ -1,0 +1,81 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.tip-image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.tip-header-container {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 32px;
+}
+
+.tip-title {
+  font-family: var(--font-lato), sans-serif;
+  font-weight: 900;
+  font-size: 26px;
+  line-height: 30px;
+  letter-spacing: -0.53px;
+  color: #fff;
+}
+
+.tip-content {
+  padding: 24px;
+  font-family: var(--font-lato), sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.53px;
+  color: #fff;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+  gap: 16px;
+}
+
+.error {
+  font-family: var(--font-lato), sans-serif;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 40px;
+  letter-spacing: -0.8px;
+  color: #fff;
+}
+
+.error-message {
+  font-family: var(--font-lato), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;
+}
+
+.retry-button {
+  width: 325px;
+  height: 54px;
+  border-radius: 8px;
+  background-color: var(--quaternary-dark);
+  font-family: var(--font-lato), sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  color: #fff;
+  border: none;
+}
