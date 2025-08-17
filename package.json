@@ -14,6 +14,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "generate-icon-types": "npx tsx scripts/generate-icon-types.ts",
     "lint": "npm run eslint && npm run stylelint && npm run typecheck",
+    "seed": "npx tsx seed/seed.ts",
     "payload": "PAYLOAD_CONFIG_PATH=src/payload.config.ts payload"
   },
   "dependencies": {
@@ -49,6 +50,7 @@
     "prettier": "^3.6.2",
     "stylelint": "^16.23.1",
     "stylelint-config-standard": "^39.0.0",
+    "tsx": "^4.19.2",
     "typescript": "^5"
   }
 }
