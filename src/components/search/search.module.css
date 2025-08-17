@@ -1,0 +1,35 @@
+.search {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  cursor: text;
+  gap: 12px;
+  padding: 4px;
+  padding-left: 24px;
+  background: #ffffff80;
+}
+
+.input {
+  background: none;
+  order: 0;
+  font-family: var(--font-lato), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 40px;
+  letter-spacing: 0;
+  vertical-align: middle;
+  border: none;
+  outline: none;
+  color: #fff;
+  height: 30px;
+}
+
+.input::placeholder {
+  color: #fff;
+}
+
+.prefix {
+  display: flex;
+  align-items: center;
+  order: -1;
+}
