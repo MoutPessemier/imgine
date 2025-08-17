@@ -17,10 +17,6 @@ IMGine is a modern web application built with Next.js 15 and Payload CMS that he
 - **Sharp**: High-performance image processing
 - **Radix UI**: Accessible component primitives
 
-## Project Structure
-
-You can find the [project structure visualised](<https://tree.nathanfriend.com/?s=(%27optiZs!(%27fancy!true~fullPath!falW~trailingSlash!true~rootDot!falW)~source!(%27source!%27.8CLAUDE.md8es%22mediaVoceanBVskiingB3Ynext-env.d68next.O68node_modules8packI-lock.jsZ8packI.jsZ8H-X68publicViFs3*4spritesheet.svg34imIs352cyan-background.png352oceanB352skiingB35YREADME.md8scripts34generate-iF-X68WedVREADME.mdVWed-data634Wed68srcVapp3J%7Bapp%7D92layoutN2pI7JpIN4tips954general9552%5Bid%5D955JerrorN55JpI7*55*4pIN552pI7*554pI6x3J%7BH%7D92admin9J%5B%5B...Wgments%5D%5D9*Jnot-foundN**4pIN*4importMap.js92api9J%5B...slug%5D9**QJgraphql9**Q*4graphql-playground9*5Q4layout6x3JfaviF.ico3*4global-error6xVcollectiZs3JMedia63JTips63*4UWrs6VcompZents3J%2392%23N4G3Jcard92card7JcardN4G3JiF94iF6x3JK92K7JKN4G3JWarch92G92Warch7*4Warch6x3*4Wlect3*52G3*52Wlect754Wlect6xVmigratiZsVH-generated-schema6VH-X6VH.O6Vstyles3*4globals.css34X352iFs6354G8style%22tsO.jsZ%5Cn4tsO6buildinfo%27)~versiZ!%271%27)*%E2%94%82z%200%E2%94%80%E2%94%80%202%E2%94%9C03%5Cn*4%E2%94%9405zz6.ts7.module.css3*8%5Cn293**B-visual.pngFcZGindex6HpayloadIageJ*2KiF-circleN6x9OFfigQ4route69V32WseXtypesY4swallowingB8Zonz%20%20%22lint.O.mjs8%23back-buttZ%01%23%22zZYXWVQONKJIHGFB987654320*>).
-
 ## Prerequisites
 
 - Node.js (v18 or later recommended)
@@ -74,6 +70,7 @@ The application will be available at <http://localhost:3000>
 - `npm run lint` - Run ESLint, Prettier, and Stylelint checks
 - `npm run typecheck` - Run TypeScript type checking
 - `npm run generate-icon-types` - Generate TypeScript types from SVG sprite
+- `npm run seed` - Seed the database with initial content (wip)
 - `npm run payload` - Start Payload commands
 
 ## Admin Access
@@ -87,11 +84,12 @@ The application will be available at <http://localhost:3000>
 
 ## Content Management
 
-The application includes three main collections:
+The application includes four main collections:
 
 1. **Tips**: Categorized content with title, content, images, and categories (Food, Weather, Stress)
-2. **Media**: File uploads and media management
-3. **Users**: User authentication and management
+2. **Posts**: Community posts with title, content, writer relationship, and categories (Vision, Hearing, Speech, Swallowing)
+3. **Media**: File uploads and media management
+4. **Users**: User authentication and management
 
 ## Project Structure
 
@@ -103,19 +101,24 @@ The application includes three main collections:
 - `public/` - Static assets including SVG icons and images
 - `scripts/` - Utility scripts for development
 
+  You can find the [project structure visualised](<https://tree.nathanfriend.com/?s=(%27optiZs!(%27fancy!true~fullPath!falW~trailingSlash!true~rootDot!falW)~source!(%27source!%27.8CLAUDE.md8es%22mediaVoceanBVskiingB3Ynext-env.d68next.O68node_modules8packI-lock.jsZ8packI.jsZ8H-X68publicViFs3*4spritesheet.svg34imIs352cyan-background.png352oceanB352skiingB35YREADME.md8scripts34generate-iF-X68WedVREADME.mdVWed-data634Wed68srcVapp3J%7Bapp%7D92layoutN2pI7JpIN4tips954general9552%5Bid%5D955JerrorN55JpI7*55*4pIN552pI7*554pI6x3J%7BH%7D92admin9J%5B%5B...Wgments%5D%5D9*Jnot-foundN**4pIN*4importMap.js92api9J%5B...slug%5D9**QJgraphql9**Q*4graphql-playground9*5Q4layout6x3JfaviF.ico3*4global-error6xVcollectiZs3JMedia63JTips63*4UWrs6VcompZents3J%2392%23N4G3Jcard92card7JcardN4G3JiF94iF6x3JK92K7JKN4G3JWarch92G92Warch7*4Warch6x3*4Wlect3*52G3*52Wlect754Wlect6xVmigratiZsVH-generated-schema6VH-X6VH.O6Vstyles3*4globals.css34X352iFs6354G8style%22tsO.jsZ%5Cn4tsO6buildinfo%27)~versiZ!%271%27)*%E2%94%82z%200%E2%94%80%E2%94%80%202%E2%94%9C03%5Cn*4%E2%94%9405zz6.ts7.module.css3*8%5Cn293**B-visual.pngFcZGindex6HpayloadIageJ*2KiF-circleN6x9OFfigQ4route69V32WseXtypesY4swallowingB8Zonz%20%20%22lint.O.mjs8%23back-buttZ%01%23%22zZYXWVQONKJIHGFB987654320*>).
+
 ## Features
 
 - **Content Management**: Full CMS capabilities with Payload admin panel
 - **Categorized Content**: Organized tips and content by category
+- **Community Posts**: User-generated posts with different categories
 - **Media Management**: Upload and manage images and files
 - **Responsive Design**: Mobile-friendly interface
 - **Type Safety**: Full TypeScript integration
 - **Icon System**: SVG sprite-based icon system with auto-generated types
 - **Modern Tooling**: ESLint, Prettier, and Stylelint for code quality
+- **Database Seeding**: Comprehensive seeding system for initial content
 
 ## Payload API Endpoints
 
 - `GET /api/tips` - Retrieve tips content
+- `GET /api/posts` - Retrieve community posts
 - `GET /api/media` - Access media files
 - `POST /api/graphql` - GraphQL endpoint for data queries
 - `GET /api/graphql-playground` - GraphQL playground for testing
@@ -127,6 +130,17 @@ The application includes three main collections:
 - Supports both REST and GraphQL APIs
 - Automatic icon type generation from SVG sprites
 - CSS Modules for component-scoped styling
+
+## Database Seeding (WIP)
+
+The project includes a comprehensive seeding system to populate the database with initial content:
+
+- **Users**: Admin and regular user accounts
+- **Tips**: 14 pre-defined tips across Food, Weather, and Stress categories
+- **Posts**: 8 community posts across Vision, Hearing, Speech, and Swallowing categories
+- **Media**: 3 sample images for content
+
+Run `npm run seed` to populate your database with this initial content.
 
 ## Author
 
