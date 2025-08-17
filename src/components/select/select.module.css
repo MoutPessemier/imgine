@@ -1,0 +1,50 @@
+.trigger {
+  width: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 8px;
+  background-color: rgb(255 255 255 / 50%);
+  border: none;
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 40px;
+  letter-spacing: 0;
+  vertical-align: middle;
+  padding: 0 16px;
+  color: #fff;
+}
+
+.content {
+  background-color: rgb(255 255 255 / 60%);
+  border-radius: 8px;
+  width: 100%;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item {
+  padding: 4px 8px;
+  width: 98px;
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 40px;
+  letter-spacing: 0;
+  vertical-align: middle;
+  color: #000;
+}
+
+.item:not(:last-child) {
+  box-shadow: 0 1px 0 0 rgb(0 0 0 / 30%);
+}
+
+.selected {
+  color: var(--primary-dark);
+}
