@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px 12px 12px;
+}
+
+.sub-title {
+  font-family: var(--font-lato), sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.48px;
+  color: #ffffffb3;
+}
+
+.tips-container {
+  display: flex;
+  flex-direction: row;
+  overflow-y: scroll;
+  gap: 16px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  height: 64px;
+}
