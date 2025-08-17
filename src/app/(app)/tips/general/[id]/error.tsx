@@ -11,7 +11,7 @@ export default function Error({
 }) {
   return (
     <main className={styles["error-container"]}>
-      <h2 className={styles.error}>Error loading tip</h2>
+      <h2 className={styles.error}>Error loading tip: {error.message}</h2>
       <p className={styles["error-message"]}>Try again later</p>
       <button onClick={reset} className={styles["retry-button"]}>
         Try again
