@@ -5,7 +5,7 @@ import { BackButton } from "@/components/back-button/back-button";
 import { Card } from "@/components/card";
 import { Icon } from "@/components/icon";
 import { IconCircle } from "@/components/icon-circle";
-import { Search } from "@/components/search/search";
+import { Search } from "@/components/search";
 import { TimeSelector } from "@/components/time-selector";
 import { type Media } from "@/payload-types";
 import config from "@payload-config";
@@ -24,7 +24,7 @@ export default async function General() {
       <BackButton className={styles["back-button"]} />
       <h1 className={styles.title}>Tips/FAQ</h1>
       <Search />
-      <TimeSelector totalDocs={tips.totalDocs} />
+      <TimeSelector title="Tips of the " totalDocs={tips.totalDocs} />
 
       <div className={styles["tips-container"]}>
         {tips.docs.map((tip) => {
@@ -41,10 +41,12 @@ export default async function General() {
               </Card.Header>
               <Card.Content>
                 <Image src={image.url!} alt={image.alt} fill />
-                <span className="tips-title">{tip.title}</span>
-                <span className="tips-content">
-                  {tip.content as unknown as string}
-                </span>
+                <Card.Text>
+                  <span className="tips-title">{tip.title}</span>
+                  <span className="tips-content">
+                    {tip.content as unknown as string}
+                  </span>
+                </Card.Text>
               </Card.Content>
               <Card.Footer>
                 <Card.Action href="#">MORE LIKE THIS</Card.Action>

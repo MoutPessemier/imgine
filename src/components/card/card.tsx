@@ -38,6 +38,15 @@ export const Content = ({
   );
 };
 
+type CardTextProps = ComponentPropsWithoutRef<"p">;
+
+export const Text = ({ children, className, ...props }: CardTextProps) => {
+  return (
+    <p className={clsx(styles["card-text"], className)} {...props}>
+      {children}
+    </p>
+  );
+};
 type CardFooterProps = ComponentPropsWithoutRef<"div">;
 
 export const Footer = ({ children, className, ...props }: CardFooterProps) => {

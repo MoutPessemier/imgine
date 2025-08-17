@@ -27,10 +27,13 @@
   width: 100%;
   aspect-ratio: 16/9;
   padding: 24px;
-  padding-right: 157px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.card-text {
+  padding-right: 157px;
 }
 
 .card-footer {

@@ -1,11 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getPayload } from "payload";
 
 import { Card } from "@/components/card";
 import { Icon } from "@/components/icon";
 import { IconCircle } from "@/components/icon-circle";
+import { PostCard } from "@/components/post-card";
+import { type User } from "@/payload-types";
 import { CATEGORIES } from "@/types";
 import { type IconName } from "@/types/icons";
+import { calculateDaysDifference } from "@/utils/calculate-days-difference";
+import { truncate } from "@/utils/truncate";
+import config from "@payload-config";
 
 import styles from "./page.module.css";
 
@@ -24,7 +30,13 @@ const getIconName = (category: string): IconName => {
   return iconMap[category] || "info";
 };
 
-export default function Home() {
+export default async function Home() {
+  const payload = await getPayload({ config });
+  const posts = await payload.find({
+    collection: "posts",
+    depth: 2,
+  });
+
   return (
     <main className={styles.container}>
       <div>
@@ -47,6 +59,7 @@ export default function Home() {
           );
         })}
       </div>
+
       <Card.Root>
         <Card.Header>
           <IconCircle.Root>
@@ -62,11 +75,13 @@ export default function Home() {
             alt="Swallowing visual"
             fill
           />
-          <span className="tips-title">Swallowing</span>
-          <span className="tips-content">
-            If you struggle with swallowing, eat soft foods wherever possible.
-            You can check out some of our soft food recipes for ideas here.
-          </span>
+          <Card.Text>
+            <span className="tips-title">Swallowing</span>
+            <span className="tips-content">
+              If you struggle with swallowing, eat soft foods wherever possible.
+              You can check out some of our soft food recipes for ideas here.
+            </span>
+          </Card.Text>
         </Card.Content>
         <Card.Footer>
           <Card.Action href="/tips/general">see all</Card.Action>
@@ -84,12 +99,29 @@ export default function Home() {
           <span>Community</span>
         </Card.Header>
         <Card.Content>
-          <div>
-            <span className="tips-title">This week&apos;s topics</span>
-            <div>
-              {/* // TODO: Create Community collection, add 3 and render them here  */}
-              {}
-            </div>
+          <span className="tips-title">This week&apos;s topics</span>
+          <div className={styles["posts-container"]}>
+            {posts.docs.map((post) => {
+              const writer = post.writer as User;
+
+              return (
+                <PostCard.Root key={post.id}>
+                  <PostCard.Header>
+                    <Image
+                      src="/images/profile.png"
+                      alt="profile picture"
+                      width={26}
+                      height={26}
+                    />
+                    <div>
+                      <PostCard.Meta>{`posted ${calculateDaysDifference(post.createdAt)} days ago •  ${writer.name}`}</PostCard.Meta>
+                      <PostCard.Title>{post.title}</PostCard.Title>
+                    </div>
+                  </PostCard.Header>
+                  <PostCard.Content>{truncate(post.content)}</PostCard.Content>
+                </PostCard.Root>
+              );
+            })}
           </div>
         </Card.Content>
         <Card.Footer>
@@ -113,11 +145,13 @@ export default function Home() {
             alt="Swallowing visual"
             fill
           />
-          <span className="tips-title">Swallowing</span>
-          <span className="tips-content">
-            If you struggle with swallowing, eat soft foods wherever possible.
-            You can check out some of our soft food recipes for ideas here.
-          </span>
+          <Card.Text>
+            <span className="tips-title">Swallowing</span>
+            <span className="tips-content">
+              If you struggle with swallowing, eat soft foods wherever possible.
+              You can check out some of our soft food recipes for ideas here.
+            </span>
+          </Card.Text>
         </Card.Content>
         <Card.Footer>
           <Card.Action href="#">SEE ALL</Card.Action>

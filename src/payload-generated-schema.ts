@@ -18,8 +18,20 @@ import {
   numeric,
   integer,
   jsonb,
+  pgEnum,
 } from "@payloadcms/db-postgres/drizzle/pg-core";
 import { sql, relations } from "@payloadcms/db-postgres/drizzle";
+export const enum_tips_category = pgEnum("enum_tips_category", [
+  "Food",
+  "Weather",
+  "Stress",
+]);
+export const enum_posts_category = pgEnum("enum_posts_category", [
+  "Vision",
+  "Hearing",
+  "Speech",
+  "Swallowing",
+]);
 
 export const media = pgTable(
   "media",
@@ -89,6 +101,7 @@ export const users = pgTable(
   "users",
   {
     id: serial("id").primaryKey(),
+    name: varchar("name").notNull(),
     updatedAt: timestamp("updated_at", {
       mode: "string",
       withTimezone: true,
@@ -123,6 +136,70 @@ export const users = pgTable(
     users_updated_at_idx: index("users_updated_at_idx").on(columns.updatedAt),
     users_created_at_idx: index("users_created_at_idx").on(columns.createdAt),
     users_email_idx: uniqueIndex("users_email_idx").on(columns.email),
+  }),
+);
+
+export const tips = pgTable(
+  "tips",
+  {
+    id: serial("id").primaryKey(),
+    title: varchar("title").notNull(),
+    content: varchar("content").notNull(),
+    image: integer("image_id").references(() => media.id, {
+      onDelete: "set null",
+    }),
+    category: enum_tips_category("category"),
+    updatedAt: timestamp("updated_at", {
+      mode: "string",
+      withTimezone: true,
+      precision: 3,
+    })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp("created_at", {
+      mode: "string",
+      withTimezone: true,
+      precision: 3,
+    })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    tips_image_idx: index("tips_image_idx").on(columns.image),
+    tips_updated_at_idx: index("tips_updated_at_idx").on(columns.updatedAt),
+    tips_created_at_idx: index("tips_created_at_idx").on(columns.createdAt),
+  }),
+);
+
+export const posts = pgTable(
+  "posts",
+  {
+    id: serial("id").primaryKey(),
+    title: varchar("title").notNull(),
+    content: varchar("content").notNull(),
+    writer: integer("writer_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    category: enum_posts_category("category"),
+    updatedAt: timestamp("updated_at", {
+      mode: "string",
+      withTimezone: true,
+      precision: 3,
+    })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp("created_at", {
+      mode: "string",
+      withTimezone: true,
+      precision: 3,
+    })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    posts_writer_idx: index("posts_writer_idx").on(columns.writer),
+    posts_updated_at_idx: index("posts_updated_at_idx").on(columns.updatedAt),
+    posts_created_at_idx: index("posts_created_at_idx").on(columns.createdAt),
   }),
 );
 
@@ -168,6 +245,8 @@ export const payload_locked_documents_rels = pgTable(
     path: varchar("path").notNull(),
     mediaID: integer("media_id"),
     usersID: integer("users_id"),
+    tipsID: integer("tips_id"),
+    postsID: integer("posts_id"),
   },
   (columns) => ({
     order: index("payload_locked_documents_rels_order_idx").on(columns.order),
@@ -181,6 +260,12 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_users_id_idx: index(
       "payload_locked_documents_rels_users_id_idx",
     ).on(columns.usersID),
+    payload_locked_documents_rels_tips_id_idx: index(
+      "payload_locked_documents_rels_tips_id_idx",
+    ).on(columns.tipsID),
+    payload_locked_documents_rels_posts_id_idx: index(
+      "payload_locked_documents_rels_posts_id_idx",
+    ).on(columns.postsID),
     parentFk: foreignKey({
       columns: [columns["parent"]],
       foreignColumns: [payload_locked_documents.id],
@@ -195,6 +280,16 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns["usersID"]],
       foreignColumns: [users.id],
       name: "payload_locked_documents_rels_users_fk",
+    }).onDelete("cascade"),
+    tipsIdFk: foreignKey({
+      columns: [columns["tipsID"]],
+      foreignColumns: [tips.id],
+      name: "payload_locked_documents_rels_tips_fk",
+    }).onDelete("cascade"),
+    postsIdFk: foreignKey({
+      columns: [columns["postsID"]],
+      foreignColumns: [posts.id],
+      name: "payload_locked_documents_rels_posts_fk",
     }).onDelete("cascade"),
   }),
 );
@@ -309,6 +404,20 @@ export const relations_users = relations(users, ({ many }) => ({
     relationName: "sessions",
   }),
 }));
+export const relations_tips = relations(tips, ({ one }) => ({
+  image: one(media, {
+    fields: [tips.image],
+    references: [media.id],
+    relationName: "image",
+  }),
+}));
+export const relations_posts = relations(posts, ({ one }) => ({
+  writer: one(users, {
+    fields: [posts.writer],
+    references: [users.id],
+    relationName: "writer",
+  }),
+}));
 export const relations_payload_locked_documents_rels = relations(
   payload_locked_documents_rels,
   ({ one }) => ({
@@ -326,6 +435,16 @@ export const relations_payload_locked_documents_rels = relations(
       fields: [payload_locked_documents_rels.usersID],
       references: [users.id],
       relationName: "users",
+    }),
+    tipsID: one(tips, {
+      fields: [payload_locked_documents_rels.tipsID],
+      references: [tips.id],
+      relationName: "tips",
+    }),
+    postsID: one(posts, {
+      fields: [payload_locked_documents_rels.postsID],
+      references: [posts.id],
+      relationName: "posts",
     }),
   }),
 );
@@ -366,9 +485,13 @@ export const relations_payload_migrations = relations(
 );
 
 type DatabaseSchema = {
+  enum_tips_category: typeof enum_tips_category;
+  enum_posts_category: typeof enum_posts_category;
   media: typeof media;
   users_sessions: typeof users_sessions;
   users: typeof users;
+  tips: typeof tips;
+  posts: typeof posts;
   payload_locked_documents: typeof payload_locked_documents;
   payload_locked_documents_rels: typeof payload_locked_documents_rels;
   payload_preferences: typeof payload_preferences;
@@ -377,6 +500,8 @@ type DatabaseSchema = {
   relations_media: typeof relations_media;
   relations_users_sessions: typeof relations_users_sessions;
   relations_users: typeof relations_users;
+  relations_tips: typeof relations_tips;
+  relations_posts: typeof relations_posts;
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels;
   relations_payload_locked_documents: typeof relations_payload_locked_documents;
   relations_payload_preferences_rels: typeof relations_payload_preferences_rels;

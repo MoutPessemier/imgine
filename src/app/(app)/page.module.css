@@ -21,8 +21,19 @@
   gap: 16px;
 }
 
+.tips-container::-webkit-scrollbar {
+  display: none;
+}
+
 .footer {
   display: flex;
   justify-content: space-around;
   height: 64px;
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  overflow-x: scroll;
 }

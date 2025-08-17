@@ -8,10 +8,11 @@ import { Select } from "@/components/select";
 import styles from "./time-selector.module.css";
 
 type TimeSelectorProps = {
+  title: string;
   totalDocs: number;
 };
 
-export const TimeSelector = ({ totalDocs }: TimeSelectorProps) => {
+export const TimeSelector = ({ title, totalDocs }: TimeSelectorProps) => {
   const [selectedTime, setSelectedTime] = useState("week");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,7 +21,11 @@ export const TimeSelector = ({ totalDocs }: TimeSelectorProps) => {
   return (
     <div className={styles["time-container"]}>
       <div>
-        <p className={styles["time-indicator"]}>Tips of the {selectedTime}</p>
+        <p className={styles["time-indicator"]}>
+          {title}
+          {` `}
+          {selectedTime}
+        </p>
         <p className={styles["doc-amount"]}>{totalDocs} total</p>
       </div>
       <Select.Root
