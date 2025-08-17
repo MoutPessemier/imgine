@@ -1,0 +1,21 @@
+.time-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.time-indicator {
+  font-family: var(--font-lato), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.41px;
+  color: #fff;
+}
+
+.doc-amount {
+  font-family: var(--font-lato), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: -0.41px;
+  color: #d0e8ea;
+}
