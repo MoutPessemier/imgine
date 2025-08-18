@@ -62,6 +62,10 @@ npm run dev
 
 The application will be available at <http://localhost:3000>
 
+## Live Deployment
+
+The application is deployed and available at: **<https://imgine-app-178452309711.europe-west1.run.app/>**
+
 ## Development Commands
 
 - `npm run dev` - Start development server with Turbopack (faster builds)
