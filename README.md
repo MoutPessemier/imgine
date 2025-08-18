@@ -28,7 +28,7 @@ IMGine is a modern web application built with Next.js 15 and Payload CMS that he
 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone git@github.com:MoutPessemier/imgine.git
 cd imgine
 ```
 
